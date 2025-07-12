@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MENÚ DE QUEENCY</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('fondo.png');
+      background-size: cover;
+      padding: 0;
+    }
+    header {
+      background: #ff2454;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.5em;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px #00000020;
+      padding: 20px;
+    }
+    h2 {
+      color: #e65100;
+      margin-bottom: 10px;
+    }
+    .menu-section {
+      margin-bottom: 30px;
+    }
+    .menu-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: flex-start;
+    }
+    .menu-item {
+      background: #fffde7;
+      border: 1px solid #ffe082;
+      border-radius: 10px;
+      padding: 10px;
+      width: 180px;
+      text-align: center;
+      box-shadow: 0 2px 4px #00000010;
+    }
+    .menu-item img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .menu-item h4 {
+      margin: 10px 0 5px;
+      color: #333;
+    }
+    .menu-item strong {
+      color: #ff2454;
+    }
+    .options, select, button {
+      margin-top: 5px;
+      font-size: 0.9em;
+    }
+    button, select {
+      background: #ffb300;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    button:active {
+      background: #e65100;
+    }
+    .order-summary {
+      background: #fff3cd;
+      border: 1px solid #ffeeba;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .contact {
+      background: #ffe0b2;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .contact a {
+      color: #ff2454;
+      text-decoration: none;
+    }
+    .contact a:hover {
+      text-decoration: underline;
+    }
+    .counter {
+      font-weight: bold;
+      margin: 0 5px;
+    }
+    @media (max-width: 768px) {
+      .menu-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+      .menu-item {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+  <center>
+    <img src="icon.png" alt="Logo" width="100" height="100" align="middle">
+    <span style="font-size: 40px; font-weight: bold; color: white;">MENÚ DE QUEENCY</span>
+  </center>
+</header>
+  <div class="container">
+    <div class="menu-section">
+      <h2>MENU DE POLLOS</h2>
+      <div class="menu-grid" id="pollo-menu"></div>
+    </div>
+
+    <div class="menu-section">
+      <h2>MENU DE REFRESCOS</h2>
+      <div class="menu-grid" id="refresco-menu"></div>
+    </div>
+
+    <div class="order-summary" id="order-summary">
+      <h3>RESUMEN DE SU PEDIDO</h3>
+      <div id="order-items"></div>
+      <div><strong>TOTAL: Bs <span id="order-total">0</span></strong></div>
+      <button onclick="realizarPedido()">REALIZAR PEDIDO Y PAGAR</button>
+      <div id="qr-code" style="margin-top:15px;"></div>
+    </div>
+
+    <div class="contact">
+      <h3>CONTACTA PARA PEDIDOS DELIVERY</h3>
+      <p>
+        <a href="tel:+59163638790">📞 Llamar: +591 6 363 8790</a><br>
+        <a href="tel:+59176153543">📞 Llamar: +591 7 615 3543</a>
+      </p>
+      <p>
+        <a href="https://wa.me/59163638790" target="_blank">💬 WhatsApp 1</a> |
+        <a href="https://wa.me/59176153543" target="_blank">💬 WhatsApp 2</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const pollos = [
+      { nombre: "Pollo frito simple", precio: 19, img: "1.jpeg" },
+      { nombre: "Pollo frito doble", precio: 35, img: "2.jpeg" },
+      { nombre: "Pollo a la canasta", precio: 29, img: "3.jpg" },
+      { nombre: "Pollo ahumado", precio: 19, img: "4.jpeg" },
+      { nombre: "Pipocas + refresco", precio: 29, img: "5.png" }
+    ];
+    const acompanamientos = [
+      { nombre: "Arroz y papa", value: "arroz_papa" },
+      { nombre: "Pura papa", value: "papa" }
+    ];
+    const acompañado = [
+      { nombre: "pierna ", value: "Pierna" },
+      { nombre: "pecho", value: "pecho" },
+      { nombre: "ala", value: "ala" },
+      { nombre: "entre pierna", value: "entre_pierna" }
+    ];
+    const refrescos = [
+      { nombre: "Mini coca cola", precio: 3, img: "11.jpg" },
+      { nombre: "Popular", precio: 8, img: "12.jpg" },
+      { nombre: "Coca Cola 1/2 l.", precio: 12, img: "13.jpg" },
+      { nombre: "Coca Cola 2l.", precio: 18, img: "14.jpg" },
+      { nombre: "Coca Cola 3l.", precio: 23, img: "15.jpg" },
+      { nombre: "Jugo del Valle", precio: 20, img: "16.jpg" },
+      { nombre: "Mini Jugo del Valle", precio: 7, img: "17.jpg" }
+    ];
+    let pedido = [];
+
+    const polloMenu = document.getElementById('pollo-menu');
+    pollos.forEach((pollo, idx) => {
+      const div = document.createElement('div');
+      div.className = "menu-item";
+      div.innerHTML = `
+        <img src="${pollo.img}" alt="${pollo.nombre}">
+        <h4>${pollo.nombre}</h4>
+        <strong>Bs ${pollo.precio}</strong><br>
+        <select id="acom-${idx}">
+          ${acompanamientos.map(a => `<option value="${a.value}">${a.nombre}</option>`).join('')}
+        </select>
+        <select id="acomp-${idx}">
+          ${acompañado.map(a => `<option value="${a.value}">${a.nombre}</option>`).join('')}
+        </select>
+         <button onclick="addPollo(${idx})">Agregar</button>
+        <br>
+      `;
+      polloMenu.appendChild(div);
+    });
+
+    const refrescoMenu = document.getElementById('refresco-menu');
+    refrescos.forEach((refresco, idx) => {
+      const div = document.createElement('div');
+      div.className = "menu-item";
+      div.innerHTML = `
+        <img src="${refresco.img}" alt="${refresco.nombre}">
+        <h4>${refresco.nombre}</h4>
+        <strong>Bs ${refresco.precio}</strong><br>
+        <button onclick="addRefresco(${idx})">Agregar</button>
+      `;
+      refrescoMenu.appendChild(div);
+    });
+
+    window.addPollo = function(idx) {
+      const acomp = document.getElementById(`acom-${idx}`).value;
+      const key = `pollo-${idx}-${acomp}`;
+      const found = pedido.find(item => item.key === key);
+      if (found) found.cantidad++;
+      else pedido.push({ key, tipo: 'pollo', nombre: pollos[idx].nombre, precio: pollos[idx].precio, acomp: acompanamientos.find(a => a.value === acomp).nombre, cantidad: 1 });
+      renderPedido();
+    };
+
+    window.addRefresco = function(idx) {
+      const key = `refresco-${idx}`;
+      const found = pedido.find(item => item.key === key);
+      if (found) found.cantidad++;
+      else pedido.push({ key, tipo: 'refresco', nombre: refrescos[idx].nombre, precio: refrescos[idx].precio, cantidad: 1 });
+      renderPedido();
+    };
+
+    function renderPedido() {
+      const orderItems = document.getElementById('order-items');
+      orderItems.innerHTML = '';
+      let total = 0;
+      pedido.forEach((item, idx) => {
+        let desc = item.nombre;
+        if (item.tipo === 'pollo') desc += ` (${item.acomp})`;
+        orderItems.innerHTML += `<div>${desc} x <span class="counter">${item.cantidad}</span> <button onclick="removeItem(${idx})">-</button> <span>Bs ${item.precio * item.cantidad}</span></div>`;
+        total += item.precio * item.cantidad;
+      });
+      document.getElementById('order-total').textContent = total;
+    }
+
+    window.removeItem = function(idx) {
+      if (pedido[idx].cantidad > 1) pedido[idx].cantidad--;
+      else pedido.splice(idx, 1);
+      renderPedido();
+    };
+
+    function realizarPedido() {
+      let mensaje = "📦 *Pedido Pollería*:%0A";
+      let total = 0;
+      pedido.forEach(item => {
+        let desc = `${item.nombre} x ${item.cantidad}`;
+        if (item.tipo === 'pollo') desc += ` (${item.acomp})`;
+        mensaje += `• ${desc} - Bs ${item.precio * item.cantidad}%0A`;
+        total += item.precio * item.cantidad;
+      });
+      mensaje += `%0A🔢 Total: Bs ${total}`;
+      const url = "https://wa.me/59163638790?text=" + mensaje;
+      document.getElementById("qr-code").innerHTML = `
+      <img src="1qr.jpg" width="310" height="280" alt="Código QR"><br>
+      <a href="${url}" target="_blank"
+        style="display:inline-block;margin-top:10px;background:#25D366;color:#fff;padding:8px 12px;border-radius:6px;text-decoration:none;">
+        Enviar por WhatsApp
+      </a>`;
+  }
+</script>
+</body>
+</html>
